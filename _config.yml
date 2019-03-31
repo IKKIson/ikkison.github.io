@@ -4,7 +4,7 @@ name: IKKIson blog
 description: Ik-Hyeon Son CS Blog using jekyll Clean theme
 
 # url is currently only used only for the RSS feed in feed.xml
-url: 'https://ikkison.github.io'
+url: 'https://ikkison.github.io/index.html'
 
 # baseurl will often be '', but for a project page on gh-pages, it needs to
 # be the project name.
