@@ -1,7 +1,7 @@
 # Site settings
 title: BoHu
-url: "https://ikkison.github.io/about/index.html"    # the protocol and hostname of your site, eg. `http://zhaoyuxiang.cn/blog`
-baseurl: "https://ikkison.github.io/" # the prefix of your site uri, eg. `/bohu-jekyll-theme` or just one slash `/`
+url: "https://ikkison.github.io"    # the protocol and hostname of your site, eg. `http://zhaoyuxiang.cn/blog`
+baseurl: "https://ikkison.github.io/about/index.html" # the prefix of your site uri, eg. `/bohu-jekyll-theme` or just one slash `/`
 #timezone: Asia/Shanghai
 description: 손익현의 CS, 개발 블로그
 # Your information
