@@ -1,44 +1,57 @@
-# Site settings
-title: IKKIson CS, Dev Blog
-url: "https://ikkison.github.io/"    # the protocol and hostname of your site, eg. `http://zhaoyuxiang.cn/blog`
-baseurl: "https://ikkison.github.io/index.html" # the prefix of your site uri, eg. `/bohu-jekyll-theme` or just one slash `/`
-#timezone: Asia/Shanghai
-description: 손익현의 CS, 개발 블로그
-# Your information
-email: shout2517@naver.com
-author: IKKIson
-place: ROK
-domain: 
-company: 
-position: 
-school:
-major: Computer Science
-resume: "https://ikkison.github.io/"
-profile: Money Makes Science, Technology Makes Money
-twitter_username: 
-weibo_username: 
-github_username: IKKIson
+title: Stack Problems
+description: My Personal Stack Problems
+author: Agus Makmun
+github: https://github.com/agusmakmun
+about: I'm Programmer for Python & Django. I've made quite a few web apps, especially on Django.
+disqus_shortname: stackproblems
+google_analytics: UA-XXXXXXXX-Y
+avatar_url: /static/img/avatar.jpg
 
-# Comment Service (Disqus or 多说)
-#  choose one and un-comment the line to active it
-disqus_shortname: IKKIson
-# get one: https://disqus.com/admin/signup/
-# duoshuo_shortname: IKKIson  
-# get one: http://duoshuo.com/create-site/
+enableTags: true
+tagarray: []
 
-permalink: /archivers/:title
-gems:
- - jekyll-paginate
- - jekyll-gist
- - jemoji
+collections:
+  project:
+    output: true
+    permalink: /project/:path/
 
-# Build settings
-paginate: 2
-paginate_path: "/page:num"
+social:
+    - icon: fa-facebook
+      link: "#"
+    - icon: fa-twitter
+      link: "#"
+    - icon: fa-linkedin
+      link: "#"
+    - icon: fa-stack-exchange
+      link: "#"
+    - icon: fa-github
+      link: "https://github.com/agusmakmun"
 
-highlighter: rouge
+share:
+  twitter_username: github.io
+  fb_appid: 1749788565247320
+
+urls:
+    - text: About Me
+      url: /about/
+    - text: My Projects
+      url: /projects/
+    - text: XML Feed
+      url: /feed.xml
+
+url: "https://agusmakmun.github.io"
+baseurl: ""
+paginate: 20
+per_page: 20
+paginate_path: "/page/:num/"
 markdown: kramdown
+gems:
+  - jekyll-paginate
+  - jekyll-gist
 
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+  endings: all
+  ignore:
+    envs: ['development']
