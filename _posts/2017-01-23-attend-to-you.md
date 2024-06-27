@@ -1,5 +1,5 @@
 ---
-title: "Edge Case: Nested and Mixed Lists"
+title: 'Edge Case: Nested and Mixed Lists'
 read_time: false
 comments: false
 share: false
@@ -8,9 +8,10 @@ categories:
   - Edge Case
 tags:
   - content
-link: https://arxiv.org/abs/1704.06485
-last_modified_at: 2017-10-26T15:12:19-04:00
+link: 'https://arxiv.org/abs/1704.06485'
+last_modified_at: {}
 ---
 
 # Attend to you
 
+## hello world
