@@ -1,0 +1,10 @@
+<div class="sidebar-ad">
+  {% include ads.html %}
+</div>
+
+<h3>최근 글</h3>
+<ul>
+  {% for post in site.posts limit:5 %}
+    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>

@@ -5,11 +5,11 @@ layout: default
   <h1>{{ page.title }}</h1>
   <p>{{ page.date | date: "%Y-%m-%d" }}</p>
 
-  {% include ads.html %} <!-- 글 상단 광고 -->
+  {% include ads.html %} <!-- 본문 상단 광고 -->
 
-  <div>
+  <div class="post-content">
     {{ content }}
   </div>
 
-  {% include ads.html %} <!-- 글 하단 광고 -->
+  {% include ads.html %} <!-- 본문 하단 광고 -->
 </article>

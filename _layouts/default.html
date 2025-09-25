@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,10 +8,15 @@
 </head>
 <body>
   {% include header.html %}
-  
-  <main>
-    {{ content }}
-  </main>
+
+  <div class="container">
+    <main>
+      {{ content }}
+    </main>
+    <aside>
+      {% include sidebar.html %}
+    </aside>
+  </div>
 
   {% include footer.html %}
 </body>
