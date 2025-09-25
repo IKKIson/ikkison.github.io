@@ -1,4 +1,4 @@
 <footer>
-  <hr>
-  <p>&copy; 2025 내 블로그</p>
+    <h5>{{ site.email | prepend: "," | prepend: site.github_username }}</h5>
+    {% include social_media.html -%}
 </footer>
