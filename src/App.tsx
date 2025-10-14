@@ -28,7 +28,7 @@ export default function App() {
     // Router로 전체 앱을 감싸면 내부의 Route/Link가 동작함.
     // basename 속성은 앱이 호스팅되는 "베이스 경로"를 지정 (예: GitHub Pages의 repo 경로).
     // 만약 사용자 페이지(username.github.io)처럼 root에서 제공된다면 basename은 '/' 또는 생략 가능.
-    <Router basename="/ikkison.github.io">
+    <Router basename="/">
       {/* Tailwind를 이용한 레이아웃 컨테이너 */}
       {/* flex flex-col: 수직 방향 플렉스 레이아웃으로 Header, main, Footer를 쌓음 */}
       {/* min-h-screen: 화면 전체 높이 확보 -> 푸터를 하단에 고정시키는 'sticky footer' 패턴에 사용 */}
