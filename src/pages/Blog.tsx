@@ -196,7 +196,7 @@ export default function Blog() {
               children={selectedPost.content}
               remarkPlugins={[remarkGfm]}
               components={{
-                img: ({ node, ...props }) => {
+                img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
                   if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
                     const baseUrl = '/ikkison.github.io/markdown/blog/';
                     return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;

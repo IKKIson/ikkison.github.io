@@ -14,7 +14,7 @@ const Profile = () => {
   }, []);
 
   const components = {
-    img: ({ node, ...props }) => {
+    img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
       // Check if src is a relative path
       if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
         const baseUrl = '/ikkison.github.io/markdown/profile/'; // Adjust this base URL if needed

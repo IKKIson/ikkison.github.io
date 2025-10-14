@@ -301,7 +301,7 @@ export default function Portfolio() {
               remarkPlugins={[remarkGfm]} // GitHub flavored Markdown 지원
               components={{
                 // 이미지 렌더링 커스터마이징
-                img: ({ node, ...props }) => {
+                img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
                   if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
                     const baseUrl = '/ikkison.github.io/markdown/portfolio/';
                     return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
@@ -322,7 +322,7 @@ export default function Portfolio() {
               children={portfolioReadmeContent} // Readme.md가 있으면 기본으로 표시
               remarkPlugins={[remarkGfm]}
               components={{
-                img: ({ node, ...props }) => {
+                img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
                   if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
                     const baseUrl = '/ikkison.github.io/markdown/portfolio/';
                     return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
