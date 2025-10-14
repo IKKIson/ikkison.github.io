@@ -47,9 +47,17 @@ export default function Home() {
       
       {/* 페이지 제목 */}
       {/* text-4xl: 글자 크기, font-bold: 글자 굵게, mb-8: 아래 여백, text-center: 가운데 정렬 */}
-      <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-8 text-center leading-tight">
-        Hello. IKKIson.
-      </h2>
+      <h3 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-8 text-center leading-tight">
+        IKKIson Online.
+      </h3>
+
+      {/* 나의 사진/이미지 */}
+      <img
+        src="/img/ikkison_ai_01.png"
+        alt="IKKIson AI Portrait"
+        // className="w-60 h-60 rounded-full mx-auto mb-8 shadow-lg object-cover"
+        className="w-42 h-60 rounded-lg mx-auto mb-8 shadow-lg object-cover"
+      />
 
       {/* 반응형 그리드 */}
       {/* grid-cols-1: 모바일 1열, sm:grid-cols-2: 작은 화면 이상 2열, lg:grid-cols-3: 큰 화면 이상 3열 */}
