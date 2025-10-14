@@ -32,29 +32,43 @@ export default function Blog() {
 
     const postEntries: Promise<BlogFile>[] = Object.entries(modules).map(
       async ([path, resolver]) => {
-        const content = await resolver();
-        const trimmedPath = path.replace('/public/markdown/blog/', '');
-        const parts = trimmedPath.split('/');
-        const filename = parts.pop()!.replace(/\.md$/, '');
-        return { path: parts, filename, content };
+        try {
+          const content = await resolver();
+          const trimmedPath = path.replace('/public/markdown/blog/', '');
+          const parts = trimmedPath.split('/');
+          const filename = parts.pop()!.replace(/\.md$/, '');
+          return { path: parts, filename, content };
+        } catch (error) {
+          console.error(`Error loading blog markdown file: ${path}`, error);
+          return Promise.reject(new Error(`Failed to load ${path}`));
+        }
       }
     );
 
-    Promise.all(postEntries).then((files) => {
-      files.sort((a, b) => a.filename.localeCompare(b.filename));
-      // setPosts(files);
-      setTree(buildTree(files));
+    Promise.all(postEntries)
+      .then((files) => {
+        console.log("Raw blog files loaded:", files);
+        files.sort((a, b) => a.filename.localeCompare(b.filename));
+        // setPosts(files);
+        setTree(buildTree(files));
+        console.log("Blog tree built:", buildTree(files));
 
-      if (isInitialLoad) {
-        if (files.length > 0) {
-          setSelectedPost(files[0]);
+        if (isInitialLoad) {
+          if (files.length > 0) {
+            setSelectedPost(files[0]);
+          }
+          setIsInitialLoad(false);
         }
-        setIsInitialLoad(false);
-      }
-    });
+      })
+      .catch((error) => {
+        console.error("Error during Promise.all in Blog useEffect:", error);
+        setTree([]);
+        setSelectedPost(null);
+      });
   }, []);
 
   const buildTree = (files: BlogFile[]): BlogTreeNode[] => {
+    console.log("buildTree input files for blog:", files);
     const root: BlogTreeNode[] = [];
     files.forEach((file) => {
       let currentLevel = root;
@@ -68,6 +82,7 @@ export default function Blog() {
       });
       currentLevel.push({ name: file.filename, post: file });
     });
+    console.log("buildTree output root for blog:", root);
     return root;
   };
 
@@ -198,7 +213,7 @@ export default function Blog() {
               components={{
                 img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
                   if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
-                    const baseUrl = '/ikkison.github.io/markdown/blog/';
+                    const baseUrl = '/markdown/blog/';
                     return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
                   }
                   return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;

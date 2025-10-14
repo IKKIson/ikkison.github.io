@@ -9,11 +9,11 @@ import Card from '../components/Card';
 const cards = [
   {
     title: 'Profile',
-    description: '안녕하세요, 자기소개 페이지입니다.',
+    description: '안녕하세요, 저를 소개합니다.',
     link: '/profile',
     color: 'card-purple',
     icon: '👤',
-    tags: ['개인', '소개'],
+    tags: ['자기소개서', '이력서', 'CV', '경력기술서'],
   },
   {
     title: 'Portfolio',
@@ -21,7 +21,7 @@ const cards = [
     link: '/portfolio',
     color: 'card-pink',
     icon: '💻',
-    tags: ['프로젝트', '개발'],
+    tags: ['포트폴리오', '프로젝트', '연구개발', '서비스'],
   },
   {
     title: 'Blog',
@@ -29,7 +29,7 @@ const cards = [
     link: '/blog',
     color: 'card-yellow',
     icon: '📝',
-    tags: ['기록', '개발', '학습'],
+    tags: ['기록', '개발', '학습', '취미', '생활'],
   },
 ];
 
@@ -43,18 +43,20 @@ export default function Home() {
     // min-h-screen: 화면 전체 높이 확보
     // p-4: padding
     // bg-gray-100: 배경색
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div className="flex flex-col items-center justify-center p-4 bg-gray-100">
       
       {/* 페이지 제목 */}
       {/* text-4xl: 글자 크기, font-bold: 글자 굵게, mb-8: 아래 여백, text-center: 가운데 정렬 */}
-      <h1 className="text-4xl font-bold mb-8 text-center">Welcome to IKKIson</h1>
+      <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-8 text-center leading-tight">
+        Hello. IKKIson.
+      </h2>
 
       {/* 반응형 그리드 */}
       {/* grid-cols-1: 모바일 1열, sm:grid-cols-2: 작은 화면 이상 2열, lg:grid-cols-3: 큰 화면 이상 3열 */}
       {/* gap-6: 카드 사이 간격 */}
       {/* w-full max-w-6xl: 최대 너비 제한 */}
       {/* justify-items-center: 그리드 아이템 가로 중앙 정렬 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl justify-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto justify-items-center">
 
         {/* cards 배열 반복 렌더링 */}
         {cards.map((card) => (

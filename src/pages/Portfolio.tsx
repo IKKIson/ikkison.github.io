@@ -45,7 +45,7 @@ export default function Portfolio() {
     let readmeContent = '';
 
     // Readme.md 파일 불러오기 (비동기적으로 먼저 시작)
-    const fetchReadmePromise = fetch('/public/markdown/portfolio/Readme.md')
+    const fetchReadmePromise = fetch('/markdown/portfolio/Readme.md')
       .then((response) => {
         if (!response.ok) throw new Error('Readme.md not found');
         return response.text();
@@ -61,52 +61,67 @@ export default function Portfolio() {
 
     const projectEntries: Promise<PortfolioFile>[] = Object.entries(modules).map(
       async ([path, resolver]) => {
-        const content = await resolver(); // 파일 내용을 문자열로 읽음
-        const trimmedPath = path.replace('/public/markdown/portfolio/', ''); // 기본 경로 제거
-        const parts = trimmedPath.split('/'); // 하위 폴더 분리
-        const filename = parts.pop()!.replace(/\.md$/, ''); // 파일 이름만 추출
+        try {
+          const content = await resolver(); // 파일 내용을 문자열로 읽음
+          const trimmedPath = path.replace('/public/markdown/portfolio/', ''); // 기본 경로 제거
+          const parts = trimmedPath.split('/'); // 하위 폴더 분리
+          const filename = parts.pop()!.replace(/\.md$/, ''); // 파일 이름만 추출
 
-        // 파일 이름에서 날짜 추출 (YYYYMMDD 형식)
-        const dateMatch = filename.match(/^(\d{8})/);
-        const date = dateMatch ? dateMatch[1] : '00000000'; // 날짜가 없으면 가장 오래된 날짜로 간주
+          // 파일 이름에서 날짜 추출 (YYYYMMDD 형식)
+          const dateMatch = filename.match(/^(\d{8})/);
+          const date = dateMatch ? dateMatch[1] : '00000000'; // 날짜가 없으면 가장 오래된 날짜로 간주
 
-        return { path: parts, filename, content, date }; // PortfolioFile 객체 생성
+          return { path: parts, filename, content, date }; // PortfolioFile 객체 생성
+        } catch (error) {
+          console.error(`Error loading markdown file: ${path}`, error);
+          return Promise.reject(new Error(`Failed to load ${path}`)); // 실패 시 Promise.all이 전체를 거부하도록 함
+        }
       }
     );
 
     // 모든 파일 및 Readme.md 로드 완료 후 처리
-    Promise.all([fetchReadmePromise, Promise.all(projectEntries)]).then(([_, files]) => {
-      const filteredFiles = files.filter(file => file.filename.toLowerCase() !== 'readme');
-      // 날짜를 기준으로 내림차순 정렬 (최신순)
-      filteredFiles.sort((a, b) => (a.date < b.date ? 1 : -1));
-      // setProjects(filteredFiles); // 전체 프로젝트 state 설정
-      setTree(buildTree(filteredFiles)); // 트리 구조 생성 (Readme.md 제외)
+    Promise.all([fetchReadmePromise, Promise.all(projectEntries)])
+      .then(([_, files]) => {
+        console.log("Raw files loaded:", files);
+        const filteredFiles = files.filter(file => file.filename.toLowerCase() !== 'readme');
+        console.log("Filtered files (excluding Readme.md):", filteredFiles);
+        // 날짜를 기준으로 내림차순 정렬 (최신순)
+        filteredFiles.sort((a, b) => (a.date < b.date ? 1 : -1));
+        // setProjects(filteredFiles); // 전체 프로젝트 state 설정
+        setTree(buildTree(filteredFiles)); // 트리 구조 생성 (Readme.md 제외)
 
-      // [초기 화면 로드 로직 시작]
-      // 페이지가 처음 로드될 때 (isInitialLoad가 true일 때만 실행)
-      // 1. Readme.md 내용이 성공적으로 로드되었다면 (readmeContent), 이를 기본 selectedProject로 설정합니다.
-      // 2. Readme.md가 없거나 로드되지 않았다면, 필터링된 파일 목록의 첫 번째 프로젝트를 selectedProject로 설정합니다.
-      // 3. 초기 로드 완료 플래그(isInitialLoad)를 false로 설정하여 이 로직이 다시 실행되지 않도록 합니다.
-      if (isInitialLoad) {
-        if (readmeContent) { // readmeContent가 성공적으로 로드되었다면
-          setSelectedProject({
-            path: [],
-            filename: 'Readme',
-            content: readmeContent,
-            date: '00000000', // Readme.md의 기본 날짜 추가
-          });
-        } else if (filteredFiles.length > 0) {
-          setSelectedProject(filteredFiles[0]);
+        // [초기 화면 로드 로직 시작]
+        // 페이지가 처음 로드될 때 (isInitialLoad가 true일 때만 실행)
+        // 1. Readme.md 내용이 성공적으로 로드되었다면 (readmeContent), 이를 기본 selectedProject로 설정합니다.
+        // 2. Readme.md가 없거나 로드되지 않았다면, 필터링된 파일 목록의 첫 번째 프로젝트를 selectedProject로 설정합니다.
+        // 3. 초기 로드 완료 플래그(isInitialLoad)를 false로 설정하여 이 로직이 다시 실행되지 않도록 합니다.
+        if (isInitialLoad) {
+          if (readmeContent) { // readmeContent가 성공적으로 로드되었다면
+            setSelectedProject({
+              path: [],
+              filename: 'Readme',
+              content: readmeContent,
+              date: '00000000', // Readme.md의 기본 날짜 추가
+            });
+          } else if (filteredFiles.length > 0) {
+            setSelectedProject(filteredFiles[0]);
+          }
+          setIsInitialLoad(false); // 초기 로드 완료
         }
-        setIsInitialLoad(false); // 초기 로드 완료
-      }
-    });
+      })
+      .catch((error) => {
+        console.error("Error during Promise.all in Portfolio useEffect:", error);
+        // 에러 발생 시 트리 초기화 또는 로딩 상태 유지
+        setTree([]);
+        setSelectedProject(null);
+      });
   }, []); // 초기 로드 시 한 번만 실행되도록 빈 의존성 배열
 
   // ================================
   // 프로젝트 배열을 트리 구조로 변환
   // ================================
   const buildTree = (files: PortfolioFile[]): TreeNode[] => {
+    console.log("buildTree input files:", files);
     const root: TreeNode[] = []; // 루트 배열
     files.forEach((file) => {
       let currentLevel = root; // 루트에서 시작
@@ -123,6 +138,7 @@ export default function Portfolio() {
       // 실제 파일 노드 추가
       currentLevel.push({ name: file.filename, project: file });
     });
+    console.log("buildTree output root:", root);
     return root;
   };
 
@@ -303,7 +319,7 @@ export default function Portfolio() {
                 // 이미지 렌더링 커스터마이징
                 img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
                   if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
-                    const baseUrl = '/ikkison.github.io/markdown/portfolio/';
+                    const baseUrl = '/markdown/portfolio/';
                     return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
                   }
                   return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
@@ -324,7 +340,7 @@ export default function Portfolio() {
               components={{
                 img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
                   if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
-                    const baseUrl = '/ikkison.github.io/markdown/portfolio/';
+                    const baseUrl = '/markdown/portfolio/';
                     return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
                   }
                   return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;

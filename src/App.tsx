@@ -38,7 +38,7 @@ export default function App() {
 
         {/* main 태그는 문서의 주요 콘텐츠를 의미하는 시맨틱 태그 */}
         {/* flex-1: 플렉스 컨테이너에서 남은 공간을 차지하게 하여 푸터가 하단에 위치하도록 함 */}
-        <main className="flex-1 overflow-hidden">
+        <main className="flex flex-col items-center justify-center flex-1 overflow-hidden">
           {/* Routes 내부에 여러 Route를 정의하여 경로별로 페이지 컴포넌트를 매핑 */}
           <Routes>
             {/* "/" 루트 경로에 Home 컴포넌트 연결 */}

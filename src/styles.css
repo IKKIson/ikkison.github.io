@@ -215,3 +215,10 @@
   scrollbar-width: thin;
   scrollbar-color: var(--color-purple) #f0f0f0;
 }
+
+/*******************************/
+/****       Home Page       ****/
+/*******************************/
+.home-center-bg {
+  background-color: var(--color-purple-grey);
+}
