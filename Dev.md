@@ -139,3 +139,20 @@ ikkison.github.io/
     이 명령은 `predeploy` 스크립트(`npm run build`)를 먼저 실행하여 프로젝트를 빌드하고, 그 다음 `dist` 디렉토리의 내용을 `gh-pages` 브랜치로 푸시하여 GitHub Pages에 배포합니다. 배포가 완료되면 `homepage`에 설정된 URL로 웹사이트에 접근할 수 있습니다.
 
     *주의:* `gh-pages` 브랜치는 자동으로 생성되므로 수동으로 생성할 필요는 없습니다.
+
+3.  **깃허브 레파지토리 설정 변경**
+
+- 아래 단계를 따라 GitHub 레포지토리 설정을 변경해 주세요:
+
+    1. GitHub 레포지토리 접속: 먼저 웹 브라우저를 열고 사용자의 GitHub 레포지토리 (https://github.com/IKKIson/ikkison.github.io/)로 이동합니다.
+    2. Settings (설정) 탭 클릭: 레포지토리 페이지에서 상단 메뉴 바에 있는 Settings 탭을 클릭합니다.
+    3. Pages (페이지) 메뉴 선택: 왼쪽 사이드바 메뉴에서 Code and automation 섹션 아래에 있는 Pages를 클릭합니다.
+    4. Source (소스) 설정:
+      - GitHub Pages 섹션에서 Source 드롭다운 메뉴를 찾습니다.
+      - 이 드롭다운을 클릭하여 gh-pages 브랜치를 선택합니다. (만약 gh-pages 브랜치가 없다면, npm run deploy 명령어를 먼저 성공적으로 실행하여 gh-pages 브랜치를 생성해야 합니다.)
+    5. Folder (폴더) 설정:
+      - Source 드롭다운 메뉴 바로 옆에 있는 /root 드롭다운 메뉴를 클릭합니다.
+      - 여기서 /(root)를 선택합니다.
+    6. Save (저장) 버튼 클릭: 위 두 가지 설정을 변경한 후, 반드시 Save 버튼을 클릭하여 변경 사항을 저장합니다.
+  
+- 설정을 저장한 후, GitHub Pages가 변경 사항을 적용하는 데 몇 분 정도 시간이 걸릴 수 있습니다. 잠시 기다린 후 https://ikkison.github.io/에 다시 접속하여 웹사이트가 정상적으로 표시되는지 확인해 주세요.
