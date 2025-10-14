@@ -1,5 +1,5 @@
 // src/pages/Portfolio.tsx
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown'; // Markdown 내용을 React 컴포넌트로 렌더링
 import remarkGfm from 'remark-gfm'; // GitHub flavored Markdown (테이블, 체크박스 등 지원)
 import { FaChevronRight, FaChevronDown, FaChevronLeft } from 'react-icons/fa'; // 트리 접기/펼치기 아이콘
@@ -23,7 +23,7 @@ type TreeNode = {
 
 export default function Portfolio() {
   // Markdown 프로젝트 파일 배열 상태
-  const [projects, setProjects] = useState<PortfolioFile[]>([]);
+  // const [projects, setProjects] = useState<PortfolioFile[]>([]);
   // 트리 구조 상태
   const [tree, setTree] = useState<TreeNode[]>([]);
   // 현재 선택된 프로젝트
@@ -79,7 +79,7 @@ export default function Portfolio() {
       const filteredFiles = files.filter(file => file.filename.toLowerCase() !== 'readme');
       // 날짜를 기준으로 내림차순 정렬 (최신순)
       filteredFiles.sort((a, b) => (a.date < b.date ? 1 : -1));
-      setProjects(filteredFiles); // 전체 프로젝트 state 설정
+      // setProjects(filteredFiles); // 전체 프로젝트 state 설정
       setTree(buildTree(filteredFiles)); // 트리 구조 생성 (Readme.md 제외)
 
       // [초기 화면 로드 로직 시작]
@@ -301,9 +301,13 @@ export default function Portfolio() {
               remarkPlugins={[remarkGfm]} // GitHub flavored Markdown 지원
               components={{
                 // 이미지 렌더링 커스터마이징
-                img: ({ node, ...props }) => (
-                  <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />
-                ),
+                img: ({ node, ...props }) => {
+                  if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
+                    const baseUrl = '/ikkison.github.io/markdown/portfolio/';
+                    return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                  }
+                  return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                },
                 // 코드 블록 렌더링 커스터마이징
                 code: ({ node, ...props }) => (
                   <code
@@ -318,9 +322,13 @@ export default function Portfolio() {
               children={portfolioReadmeContent} // Readme.md가 있으면 기본으로 표시
               remarkPlugins={[remarkGfm]}
               components={{
-                img: ({ node, ...props }) => (
-                  <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />
-                ),
+                img: ({ node, ...props }) => {
+                  if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
+                    const baseUrl = '/ikkison.github.io/markdown/portfolio/';
+                    return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                  }
+                  return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                },
                 code: ({ node, ...props }) => (
                   <code
                     {...props}

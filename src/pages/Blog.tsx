@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { FaChevronRight, FaChevronDown, FaChevronLeft } from 'react-icons/fa';
@@ -18,7 +18,7 @@ type BlogTreeNode = {
 };
 
 export default function Blog() {
-  const [posts, setPosts] = useState<BlogFile[]>([]);
+  // const [posts, setPosts] = useState<BlogFile[]>([]);
   const [tree, setTree] = useState<BlogTreeNode[]>([]);
   const [selectedPost, setSelectedPost] = useState<BlogFile | null>(null);
   const [searchText, setSearchText] = useState('');
@@ -42,7 +42,7 @@ export default function Blog() {
 
     Promise.all(postEntries).then((files) => {
       files.sort((a, b) => a.filename.localeCompare(b.filename));
-      setPosts(files);
+      // setPosts(files);
       setTree(buildTree(files));
 
       if (isInitialLoad) {
@@ -196,9 +196,13 @@ export default function Blog() {
               children={selectedPost.content}
               remarkPlugins={[remarkGfm]}
               components={{
-                img: ({ node, ...props }) => (
-                  <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />
-                ),
+                img: ({ node, ...props }) => {
+                  if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
+                    const baseUrl = '/ikkison.github.io/markdown/blog/';
+                    return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                  }
+                  return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                },
                 code: ({ node, ...props }) => (
                   <code
                     {...props}

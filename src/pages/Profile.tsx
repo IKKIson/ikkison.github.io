@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -13,9 +13,20 @@ const Profile = () => {
       .then((text) => setMarkdown(text));
   }, []);
 
+  const components = {
+    img: ({ node, ...props }) => {
+      // Check if src is a relative path
+      if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
+        const baseUrl = '/ikkison.github.io/markdown/profile/'; // Adjust this base URL if needed
+        return <img {...props} src={baseUrl + props.src.replace('./', '')} />;
+      }
+      return <img {...props} />;
+    },
+  };
+
   return (
     <div className="profile-container mx-auto max-w-3xl py-8 px-4 sm:px-6 lg:px-8 prose">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={components}>
         {markdown}
       </ReactMarkdown>
     </div>
