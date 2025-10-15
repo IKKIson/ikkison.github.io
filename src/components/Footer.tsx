@@ -39,6 +39,15 @@ export default function Footer() {
               <FaGithub className="footer-icon" />
               <span>GitHub</span>
             </a>
+
+            {/* GitHub Repository 링크 */}
+            {/* target="_blank" → 새 창에서 열기 */}
+            {/* rel="noopener noreferrer" → 보안/성능 권장 */}
+            <a href="https://github.com/IKKIson/ikkison.github.io" target="_blank" rel="noopener noreferrer" 
+               className="footer-link">
+              <FaGithub className="footer-icon" />
+              <span>Repository</span>
+            </a>
           </div>
 
           {/* 2. Copyright 정보 */}
