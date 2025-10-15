@@ -123,7 +123,12 @@ export default function Blog() {
     if (node.post) {
       // 파일 클릭 시 선택 상태 업데이트
       setSelectedPost(node.post);
-      setIsSidebarOpen(false); // 모바일이면 사이드바 닫기
+      // 모바일이면 사이드바 닫기
+      setIsSidebarOpen(false);
+      // 선택된 프로젝트로 스크롤 이동
+      listRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      // 콘텐츠 영역 최상단으로 스크롤 이동 (선택된 프로젝트가 바뀔 때마다)
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (node.children) {
       // 폴더 클릭 시 open/close 토글
       node.isOpen = !node.isOpen;

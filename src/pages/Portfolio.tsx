@@ -149,7 +149,12 @@ export default function Portfolio() {
     if (node.project) {
       // 파일 클릭 시 선택 상태 업데이트
       setSelectedProject(node.project);
-      setIsSidebarOpen(false); // 모바일이면 사이드바 닫기
+      // 모바일이면 사이드바 닫기
+      setIsSidebarOpen(false);
+      // 선택된 프로젝트로 스크롤 이동
+      listRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      // 콘텐츠 영역 최상단으로 스크롤 이동 (선택된 프로젝트가 바뀔 때마다)
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (node.children) {
       // 폴더 클릭 시 open/close 토글
       node.isOpen = !node.isOpen;
@@ -254,7 +259,27 @@ export default function Portfolio() {
           {/* =========================
               사이드바 영역
           ========================= */}
+          
           <div
+            // fixed: 고정 위치
+            // top-0, right-0: 화면 우측 상단에 위치
+            // h-full: 세로 전체 (화면 높이 100%)
+            // w-3/4: 너비를 화면의 75% 3/4 (모바일)
+            // max-w-xs: 최대 너비를 Tailwind의 xs (약 20rem ≒ 320px)로 제한
+            // bg-white: 배경 흰색
+            // shadow-xl: 그림자 효과 (크고 진한 그림자)
+            // rounded-lg: 둥근 모서리
+            // z-50: z-index 50 (다른 요소 위에 표시)
+            // transform transition-transform duration-300: 변환 및 애니메이션 효과
+            // translate-x-0: 열림 상태 (원래 위치)
+            // translate-x-full: 닫힘 상태 (화면 밖으로 이동)
+            // md:relative md:top-0 md:right-0: 데스크톱에서는 상대 위치
+            // md:max-w-64 md:w-64: 데스크톱에서는 너비 16rem
+            // md:h-full: 데스크톱에서는 높이 100%
+            // md:translate-x-0: 데스크톱에서는 항상 열림 상태
+            // md:flex-shrink-0: 데스크톱에서는 축소하지 않음
+            // md:overflow-y-auto: 데스크톱에서는 세로 스크롤 가능
+            // md:transition-all md:duration-300: 데스크톱에서는 모든 속성에 대해 애니메이션 효과
             className={`
               fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl rounded-lg z-50 transform transition-transform duration-300
               ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}
