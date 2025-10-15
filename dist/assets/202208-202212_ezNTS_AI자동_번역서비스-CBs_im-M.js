@@ -1,4 +1,4 @@
-const r=`# LLSOLLU B2C 2024\r
+const r=`# Web Project 01: Todo App\r
 \r
 **기간:** 2025.09  \r
 **기술 스택:** React, TypeScript, TailwindCSS, Vite\r
