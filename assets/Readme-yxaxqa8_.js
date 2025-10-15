@@ -1,7 +1,6 @@
 const r=`# Portfolio\r
 \r
-**기간:** 2025.09  \r
-**기술 스택:** React, TypeScript, TailwindCSS, Vite\r
+---\r
 \r
 ## 엘솔루\r
 \r
@@ -37,5 +36,5 @@ const r=`# Portfolio\r
 - Problem 의 기준은 상용화를 기준으로 판단합니다.\r
   - 벤치마크나 성능평ㄱ가는 B2B/B2C의 의미있는 실데이터를 기반으로 판단합니다.\r
   - STT의 경우 WSJ, Libspeech, AISHELL 등의 벤치마크 데이터셋과 실데이터는 5~10% 혹은 그 이상 차이가 납니다.\r
-  - LLM의 경우 대응업무, 질의응답과 같은 QA Listener 형태가 아닌 주도적이고 자가판단의 업무수행으로 테스트 합니다.\r
+  - LLM의 경우 대응업무, 질의응답과 같은 QA Listener 형태가 아닌 주도적이고 자가판단하는 업무로 테스트 합니다.\r
 `;export{r as default};
