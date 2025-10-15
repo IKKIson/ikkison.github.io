@@ -82,7 +82,7 @@ export default function Portfolio() {
     // 모든 파일 및 Readme.md 로드 완료 후 처리
     Promise.all([fetchReadmePromise, Promise.all(projectEntries)])
       .then(([_, files]) => {
-        console.log("Raw files loaded:", files);
+        console.log("Raw project files loaded:", files);
         const filteredFiles = files.filter(file => file.filename.toLowerCase() !== 'readme');
         console.log("Filtered files (excluding Readme.md):", filteredFiles);
         // 날짜를 기준으로 내림차순 정렬 (최신순)
@@ -198,166 +198,181 @@ export default function Portfolio() {
   // JSX 반환 (렌더링)
   // ================================
   return (
-    <div className="flex flex-col gap-6 p-6 w-full mx-auto relative h-[calc(100vh-64px-100px)]">
-      {/* =========================
-          모바일/태블릿 사이드바 열기 버튼
-          - md:hidden: PC에서는 숨김
-          - mb-4: 아래 여백
-      ========================= */}
-      <div className="md:hidden mb-4 flex justify-end">
-        {/* 사이드바가 닫혀있거나 열린 상태 상관없이 버튼 항상 렌더링 */}
-        <button
-          onClick={() => setIsSidebarOpen(true)} // 클릭 시 사이드바 열기
-          className="px-4 py-2 bg-purple-500 text-white rounded-lg font-medium shadow-md"
-        >
-          Show Projects
-        </button>
-      </div>
-
-      {/* =========================
-          데스크톱 버튼 영역 (Portfolio Home 및 사이드바 토글)
-      ========================= */}
-      <div className="hidden md:flex flex-row items-center justify-end gap-2 mb-4 w-full">
-        {/* 데스크톱 사이드바 토글 버튼 */}
-        <button
-          onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
-          className="p-2 bg-gray-200 rounded-lg shadow-md transition-all duration-300 hover:bg-gray-300"
-          aria-label={isDesktopSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
-        >
-          {isDesktopSidebarOpen ? <FaChevronRight /> : <FaChevronLeft />}
-        </button>
-        {/* Portfolio Home 버튼 */}
-        <button
-          onClick={() => {
-            if (portfolioReadmeContent) {
-              setSelectedProject({
-                path: [],
-                filename: 'Readme',
-                content: portfolioReadmeContent,
-                date: '00000000', // Readme.md의 기본 날짜 추가
-              });
-            }
-          }}
-          className={`flex items-center gap-2 p-2 rounded-lg font-medium transition-all duration-300
-            ${selectedProject?.filename.toLowerCase() === 'readme' && selectedProject?.path.length === 0
-              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
-              : 'text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700'}
-            `}
-        >
-          Portfolio
-        </button>
-      </div>
-
-      {/* =========================
-          메인 콘텐츠 및 사이드바 영역을 감싸는 div
-      ========================= */}
-      <div className="flex flex-col md:flex-row-reverse flex-1 gap-6">
+    <div className="flex flex-col flex-1 w-full mx-auto py-6 px-4 md:px-6">
+      <div className="flex-1 flex flex-col gap-6 p-6">
         {/* =========================
-            사이드바 영역
+            모바일/태블릿 사이드바 열기 버튼
         ========================= */}
-        <div
-          className={`
-            fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl rounded-lg z-50 transform transition-transform duration-300
-            ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}
-            md:relative md:top-0 md:right-0 ${isDesktopSidebarOpen ? 'md:max-w-64 md:w-64' : 'md:max-w-0 md:w-0 md:overflow-hidden'} md:h-full md:translate-x-0 md:flex-shrink-0 md:overflow-y-auto md:transition-all md:duration-300
-          `}
-        >
-          <div className="p-4 flex flex-col gap-2 h-full" ref={listRef}>
-            {/* 모바일 검색바 */}
-            <div className="flex justify-between items-center mb-2 md:hidden">
-              <input
-                type="text"
-                placeholder="Search projects..."
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 flex-1"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              <button
-                onClick={() => setIsSidebarOpen(false)} // X 버튼 클릭 시 닫기
-                className="ml-2 px-2 py-1 bg-red-500 text-white rounded-lg"
-              >
-                X
-              </button>
-            </div>
-
-            {/* 데스크톱 검색바 */}
-            <div className="hidden md:block mb-2">
-              <input
-                type="text"
-                placeholder="Search projects..."
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
-
-            {/* 트리 렌더링 */}
-            {renderTree(tree)}
-          </div>
+        <div className="md:hidden mb-4 flex justify-end">
+          {/* 사이드바가 닫혀있거나 열린 상태 상관없이 버튼 항상 렌더링 */}
+          <button
+            onClick={() => setIsSidebarOpen(true)} // 클릭 시 사이드바 열기
+            className="px-4 py-2 bg-purple-500 text-white rounded-lg font-medium shadow-md"
+          >
+            Show
+          </button>
         </div>
 
-        {/* 모바일 오버레이 */}
-        {isSidebarOpen && (
+        {/* =========================
+            데스크톱 버튼 영역 (Portfolio 버튼 및 사이드바 토글)
+        ========================= */}
+        <div className="hidden md:flex flex-row items-center justify-end gap-2 mb-4 w-full">
+          {/* 데스크톱 사이드바 토글 버튼 */}
+          <button
+            onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
+            className="p-2 bg-gray-200 rounded-lg shadow-md transition-all duration-300 hover:bg-gray-300"
+            aria-label={isDesktopSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+          >
+            {isDesktopSidebarOpen ? <FaChevronRight /> : <FaChevronLeft />}
+          </button>
+          {/* Portfolio 버튼 */}
+          <button
+            onClick={() => {
+              if (portfolioReadmeContent) {
+                setSelectedProject({
+                  path: [],
+                  filename: 'Readme',
+                  content: portfolioReadmeContent,
+                  date: '00000000', // Readme.md의 기본 날짜 추가
+                });
+              }
+            }}
+            className={`flex items-center gap-2 p-2 rounded-lg font-medium transition-all duration-300
+              ${selectedProject?.filename.toLowerCase() === 'readme' && selectedProject?.path.length === 0
+                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
+                : 'bg-white text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700'}
+              `}
+          >
+            Portfolio
+          </button>
+        </div>
+
+        {/* =========================
+            메인 콘텐츠 및 사이드바 영역을 감싸는 div
+        ========================= */}
+        <div className="flex flex-col md:flex-row-reverse flex-1 gap-6">
+          {/* =========================
+              사이드바 영역
+          ========================= */}
           <div
-            className="fixed inset-0 bg-black bg-opacity-30 z-40 md:hidden"
-            onClick={() => setIsSidebarOpen(false)} // 오버레이 클릭 시 닫기
-          ></div>
-        )}
+            className={`
+              fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl rounded-lg z-50 transform transition-transform duration-300
+              ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}
+              md:relative md:top-0 md:right-0 ${isDesktopSidebarOpen ? 'md:max-w-64 md:w-64' : 'md:max-w-0 md:w-0 md:overflow-hidden'} md:h-full md:translate-x-0 md:flex-shrink-0 md:overflow-y-auto md:transition-all md:duration-300
+            `}
+          >
+            <div className="p-4 flex flex-col gap-2 h-full" ref={listRef}>
+              {/* 모바일 검색바 */}
+              <div className="flex justify-between items-center mb-2 md:hidden">
+                <input
+                  type="text"
+                  placeholder="Search projects..."
+                  className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 flex-1"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
+                <button
+                  onClick={() => setIsSidebarOpen(false)} // X 버튼 클릭 시 닫기
+                  className="ml-2 px-2 py-1 bg-red-500 text-white rounded-lg"
+                >
+                  X
+                </button>
+              </div>
 
-        {/* =========================
-            Markdown 내용 영역
-        ========================= */}
-        <div
-          className="flex-1 bg-white p-6 rounded-lg shadow-md border border-gray-200 prose prose-purple dark:prose-invert overflow-auto mx-auto max-w-4xl h-full"
-          style={{}}
-        >
-          {selectedProject ? (
-            <ReactMarkdown
-              children={selectedProject.content} // 선택된 프로젝트 Markdown 내용
-              remarkPlugins={[remarkGfm]} // GitHub flavored Markdown 지원
-              components={{
-                // 이미지 렌더링 커스터마이징
-                img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
-                  if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
-                    const baseUrl = '/markdown/portfolio/';
-                    return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
-                  }
-                  return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
-                },
-                // 코드 블록 렌더링 커스터마이징
-                code: ({ node, ...props }) => (
-                  <code
-                    {...props}
-                    className="bg-gray-100 dark:bg-gray-800 p-1 rounded-md text-sm break-words"
-                  />
-                ),
-              }}
-            />
-          ) : portfolioReadmeContent ? (
-            <ReactMarkdown
-              children={portfolioReadmeContent} // Readme.md가 있으면 기본으로 표시
-              remarkPlugins={[remarkGfm]}
-              components={{
-                img: ({ node, ...props }: { node?: any; [key: string]: any }) => {
-                  if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
-                    const baseUrl = '/markdown/portfolio/';
-                    return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
-                  }
-                  return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
-                },
-                code: ({ node, ...props }) => (
-                  <code
-                    {...props}
-                    className="bg-gray-100 dark:bg-gray-800 p-1 rounded-md text-sm break-words"
-                  />
-                ),
-              }}
-            />
-          ) : (
-            <p>Loading portfolio...</p> // 로딩 중 메시지
+              {/* 데스크톱 검색바 */}
+              <div className="hidden md:block mb-2">
+                <input
+                  type="text"
+                  placeholder="Search projects..."
+                  className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
+              </div>
+
+              {/* 트리 렌더링 */}
+              {renderTree(tree)}
+            </div>
+          </div>
+
+          {/* 모바일 오버레이 */}
+          {isSidebarOpen && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-30 z-40 md:hidden"
+              onClick={() => setIsSidebarOpen(false)} // 오버레이 클릭 시 닫기
+            ></div>
           )}
-        </div>
-      </div>
-    </div>
+
+          {/* =========================
+              Markdown 내용 영역
+          ========================= */}
+          <div
+            // flex-1: 남은 공간 모두 차지.
+            // bg-white: 배경 흰색.
+            // rounded-lg: 둥근 모서리.
+            // shadow-md: 중간 정도 그림자 효과 (박스 그림자).
+            // border border-gray-200: 테두리를 얇게 주고, 회색(gray-200) 색상 사용.
+            // prose: Tailwind CSS Typography 플러그인 적용.
+            // prose-purple: a, h1, h2 등의 텍스트 컬러를 보라색 계열로 적용.
+            // dark:prose-invert: 사용자가 다크모드를 사용할 경우, 색상을 반전해서 잘 보이도록 함 (흰 배경이 검정, 검정 글자가 흰 글자 등).
+            // overflow-auto: 내용이 넘치면 스크롤이 생기도록 함.
+            // mx-auto: 수평 중앙 정렬.
+            // max-w-4xl: 최대 너비를 4xl로 제한.
+            // h-full: 부모 요소의 높이를 100% 차지.
+            // min-h-0: flexbox 컨테이너 내에서 올바르게 크기가 조정되도록 함.
+            className="flex-1 bg-white rounded-lg shadow-md border border-gray-200 prose prose-purple dark:prose-invert overflow-auto mx-auto max-w-4xl h-full min-h-0"
+            style={{}}
+          >
+            <div className="p-6">
+              {selectedProject ? (
+                <ReactMarkdown
+                  children={selectedProject.content} // 선택된 프로젝트 Markdown 내용
+                  remarkPlugins={[remarkGfm]} // GitHub flavored Markdown 지원
+                  components={{
+                    // 이미지 렌더링 커스터마이징
+                    img: ({ node, ...props }: { node?: any;[key: string]: any }) => {
+                      if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
+                        const baseUrl = '/markdown/portfolio/';
+                        return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                      }
+                      return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                    },
+                    // 코드 블록 렌더링 커스터마이징
+                    code: ({ node, ...props }) => (
+                      <code
+                        {...props}
+                        className="bg-gray-100 dark:bg-gray-800 p-1 rounded-md text-sm break-words"
+                      />
+                    ),
+                  }}
+                />
+              ) : portfolioReadmeContent ? (
+                <ReactMarkdown
+                  children={portfolioReadmeContent} // Readme.md가 있으면 기본으로 표시
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    img: ({ node, ...props }: { node?: any;[key: string]: any }) => {
+                      if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
+                        const baseUrl = '/markdown/portfolio/';
+                        return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                      }
+                      return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                    },
+                    code: ({ node, ...props }) => (
+                      <code
+                        {...props}
+                        className="bg-gray-100 dark:bg-gray-800 p-1 rounded-md text-sm break-words"
+                      />
+                    ),
+                  }}
+                />
+              ) : (
+                <p>Loading portfolio...</p> // 로딩 중 메시지
+              )}
+            </div> {/* p-6: 내부 패딩 추가 */}
+          </div>  {/* Markdown 내용 영역 끝 */}
+        </div> {/* 메인 콘텐츠 및 사이드바 영역 끝 */}
+      </div> {/* 전체 패딩 및 레이아웃 끝 */}
+    </div> /* 최상위 컨테이너 끝 */
   );
 }

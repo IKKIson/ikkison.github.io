@@ -11,8 +11,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // 파일 구조는 보통 src/pages/Home.tsx 등으로 구성됨을 가정.
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-// TODO : not yet todo app
-// import TodoApp from './pages/TodoApp';
 import Portfolio from './pages/Portfolio';
 import Blog from './pages/Blog';
 
@@ -38,6 +36,7 @@ export default function App() {
 
         {/* main 태그는 문서의 주요 콘텐츠를 의미하는 시맨틱 태그 */}
         {/* flex-1: 플렉스 컨테이너에서 남은 공간을 차지하게 하여 푸터가 하단에 위치하도록 함 */}
+        {/* <main className="flex flex-col items-center flex-1"> */}
         <main className="flex flex-col items-center justify-center flex-1 overflow-hidden">
           {/* Routes 내부에 여러 Route를 정의하여 경로별로 페이지 컴포넌트를 매핑 */}
           <Routes>
@@ -46,10 +45,7 @@ export default function App() {
 
             {/* "/profile" 경로에 Profile 컴포넌트 연결 */}
             <Route path="/profile" element={<Profile />} />
-
-            {/* TODO : not yet todo app*/}
-            {/* <Route path="/todo" element={<TodoApp />} /> */}
-
+            
             {/* 기타 페이지들: 포트폴리오, 블로그 등 */}
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/blog" element={<Blog />} />

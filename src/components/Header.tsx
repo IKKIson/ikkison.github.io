@@ -44,12 +44,16 @@ export default function Header() {
         {/* hidden md:flex → 기본 숨김, md 이상에서 flex */}
         {/* space-x-6 → 메뉴 아이템 사이 간격 */}
         <nav className="hidden md:flex space-x-6">
+          {/* 홈화면 */}
           <Link to="/" className="header-nav-link">Home</Link>
+          {/* 프로필 화면 */}
           <Link to="/profile" className="header-nav-link">Profile</Link>
-          {/* TODO : not yet todo app */}
-          {/* <Link to="/todo" className="header-nav-link">Todo</Link> */}
+          {/* 포트폴리오 화면 */}
           <Link to="/portfolio" className="header-nav-link">Portfolio</Link>
+          {/* 블로그 화면 */}
           <Link to="/blog" className="header-nav-link">Blog</Link>
+          {/* GitHub 링크 */}
+          <Link to="https://github.com/ikkison" className="header-nav-link" target="_blank">GitHub</Link>
         </nav>
 
         {/* 2. 모바일 메뉴 버튼 */}

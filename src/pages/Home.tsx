@@ -81,7 +81,7 @@ export default function Home() {
             tags={card.tags}
           />
         ))}
-      </div>
-    </div>
+      </div> {/* 그리드 종료 */}
+    </div> /* 최상위 컨테이너 종료 */
   );
 }

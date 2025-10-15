@@ -25,7 +25,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-container mx-auto max-w-3xl py-8 px-4 sm:px-6 lg:px-8 prose bg-white rounded-lg shadow-md p-6">
+    <div className="profile-container mx-auto max-w-3xl py-8 px-4 sm:px-6 lg:px-8 prose bg-white rounded-lg shadow-md p-6 my-4">
       <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={components}>
         {markdown}
       </ReactMarkdown>
