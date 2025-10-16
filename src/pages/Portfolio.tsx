@@ -3,6 +3,14 @@ import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown'; // Markdown 내용을 React 컴포넌트로 렌더링
 import remarkGfm from 'remark-gfm'; // GitHub flavored Markdown (테이블, 체크박스 등 지원)
 import { FaChevronRight, FaChevronDown, FaChevronLeft } from 'react-icons/fa'; // 트리 접기/펼치기 아이콘
+
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// --- 테마 Import ---
+// dark 테마 예시 (가장 많이 사용됨)
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'; 
+// light 테마 예시
+// import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 import '../styles.css'; // 공통 스타일 import
 
 // Portfolio Markdown 파일 타입 정의
@@ -19,6 +27,15 @@ type TreeNode = {
   children?: TreeNode[]; // 하위 노드 배열
   project?: PortfolioFile; // 실제 프로젝트 파일이면 project에 저장
   isOpen?: boolean; // 폴더 접기/펼치기 상태
+};
+
+type CustomCodeProps = {
+  node?: any;
+  inline?: boolean;
+  className?: string;
+  // children을 필수(required)에서 선택적(optional)으로 변경하여 TS2322 오류 해결
+  children?: React.ReactNode; 
+  [key: string]: any; // 나머지 모든 HTML 속성을 허용
 };
 
 export default function Portfolio() {
@@ -354,21 +371,83 @@ export default function Portfolio() {
                   children={selectedProject.content} // 선택된 프로젝트 Markdown 내용
                   remarkPlugins={[remarkGfm]} // GitHub flavored Markdown 지원
                   components={{
-                    // 이미지 렌더링 커스터마이징
+                    /* img 랜더링 커스터마이징 시작 */
+                    // img: ({ node, ...props }: { node?: any;[key: string]: any }) => {
+                    //   if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
+                    //     const baseUrl = '/markdown/portfolio/';
+                    //     return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                    //   }
+                    //   return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                    // },
+                    /* img 랜더링 커스터마이징 시작 */
                     img: ({ node, ...props }: { node?: any;[key: string]: any }) => {
-                      if (props.src && !props.src.startsWith('http') && !props.src.startsWith('/')) {
-                        const baseUrl = '/markdown/portfolio/';
-                        return <img {...props} src={baseUrl + props.src.replace('./', '')} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+                      const src = props.src;
+
+                      // 1. 외부 링크 (http/https), 절대 경로 (/)는 그대로 사용
+                      if (src && (src.startsWith('http') || src.startsWith('/'))) {
+                        return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
                       }
-                      return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+
+                      // 2. 상대 경로 처리 (로컬 이미지)
+                      // 기본 경로를 설정. 파일들이 public/markdown/portfolio/ 아래에 있다고 가정.
+                      // selectedProject.path는 파일의 디렉토리 경로 배열입니다.
+                      const pathSegments = selectedProject.path.join('/');
+                      
+                      // ex) 파일 경로: public/markdown/portfolio/category/post.md
+                      // 상대 경로 이미지: ./image.png
+                      // 최종 경로: /markdown/portfolio/category/image.png
+                      // pathSegments가 있으면 디렉토리 구분자 '/' 추가
+                      const directoryPath = pathSegments ? `${pathSegments}/` : '';
+                      
+                      // src의 './' 또는 '../'를 제거하고, 파일의 기본 디렉토리 경로를 앞에 붙입니다.
+                      const cleanSrc = src.replace(/^\.?\//, ''); // ./ 제거
+                      
+                      // 최종 이미지 경로: /markdown/portfolio/[폴더 경로]/[이미지 파일 이름]
+                      const finalSrc = `/markdown/portfolio/${directoryPath}${cleanSrc}`;
+
+                      return <img {...props} src={finalSrc} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
                     },
-                    // 코드 블록 렌더링 커스터마이징
-                    code: ({ node, ...props }) => (
-                      <code
-                        {...props}
-                        className="bg-gray-100 dark:bg-gray-800 p-1 rounded-md text-sm break-words"
-                      />
-                    ),
+                    /* img 랜더링 커스터마이징 끝 */
+                    /* 코드블록 랜더링 커스터마이징 시작 */                    
+                    code: ({ node, inline, className, children, ...props }: CustomCodeProps) => {
+                      const match = /language-(\w+)/.exec(className || '');
+                      
+                      // 1. 인라인 코드 처리 (예: `const a = 1;`)
+                      if (inline) {
+                        return (
+                          <code
+                            {...props}
+                            className="bg-gray-100 dark:bg-gray-800 p-1 rounded-md text-sm break-words"
+                          >
+                            {children}
+                          </code>
+                        );
+                      }
+
+                      // 2. 블록 코드 (fence, ```) 처리
+                      // match가 있으면 언어 지정이 된 블록 코드입니다.
+                      return match ? (
+                        <SyntaxHighlighter
+                          {...props}
+                          style={oneDark} // 원하는 테마를 선택합니다.
+                          language={match[1]}
+                          PreTag="div" // <div> 태그로 감싸서 Markdown Prose 스타일이 적용되지 않도록 합니다.
+                          customStyle={{ 
+                            margin: 0, 
+                            padding: '1rem', 
+                            borderRadius: '0.5rem', 
+                          }}
+                        >
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      ) : (
+                        // 언어 지정이 안된 일반 코드 블록 처리 (필요시 <SyntaxHighlighter>로 대체)
+                        <code {...props} className={className}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  /* 코드블록 랜더링 커스터마이징 끝 */
                   }}
                 />
               ) : portfolioReadmeContent ? (

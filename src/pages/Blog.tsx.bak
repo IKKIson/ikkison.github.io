@@ -1,4 +1,3 @@
-// src/pages/Blog.tsx
 import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -24,15 +23,6 @@ type TreeNode = {
   children?: TreeNode[];
   post?: BlogFile;
   isOpen?: boolean;
-};
-
-type CustomCodeProps = {
-  node?: any;
-  inline?: boolean;
-  className?: string;
-  // children을 필수(required)에서 선택적(optional)으로 변경하여 TS2322 오류 해결
-  children?: React.ReactNode; 
-  [key: string]: any; // 나머지 모든 HTML 속성을 허용
 };
 
 export default function Blog() {
@@ -356,7 +346,7 @@ export default function Blog() {
                     },
                     /* img 랜더링 커스터마이징 끝 */
                     /* 코드블록 랜더링 커스터마이징 시작 */
-                    code: ({ node, inline, className, children, ...props }: CustomCodeProps) => {
+                    code({ node, inline, className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || '');
                       
                       // 1. 인라인 코드 처리 (예: `const a = 1;`)
