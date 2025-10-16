@@ -5,8 +5,9 @@
 - [03 SpringSecurity](./03_개발환경_03_SpringSecurity.md)
 - [04 H2](./03_개발환경_04_H2.md)
 - [05 queryDSL](./03_개발환경_05_queryDSL.md)
-- [06 Retrofit](./03_개발환경_05_Retrofit.md)
-- [07 Swagger](./03_개발환경_05_Swagger.md)
+- [05 Retrofit](./03_개발환경_05_Retrofit.md)
+- [05 Swagger](./03_개발환경_05_Swagger.md)
+- [05 JWT](./03_개발환경_05_JWT.md)
 
 ## SpringBoot
 

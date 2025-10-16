@@ -5,8 +5,9 @@ const r=`# 개발환경\r
 - [03 SpringSecurity](./03_개발환경_03_SpringSecurity.md)\r
 - [04 H2](./03_개발환경_04_H2.md)\r
 - [05 queryDSL](./03_개발환경_05_queryDSL.md)\r
-- [06 Retrofit](./03_개발환경_05_Retrofit.md)\r
-- [07 Swagger](./03_개발환경_05_Swagger.md)\r
+- [05 Retrofit](./03_개발환경_05_Retrofit.md)\r
+- [05 Swagger](./03_개발환경_05_Swagger.md)\r
+- [05 JWT](./03_개발환경_05_JWT.md)\r
 \r
 ## SpringBoot\r
 \r
