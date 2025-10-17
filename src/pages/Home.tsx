@@ -43,13 +43,22 @@ export default function Home() {
     // min-h-screen: 화면 전체 높이 확보
     // p-4: padding
     // bg-gray-100: 배경색
-    <div className="flex flex-col items-center justify-center p-4 bg-gray-100">
+    // bg-opacity-80: 배경 투명도
+    <div className="flex flex-col items-center justify-center p-4 bg-gray-100 bg-opacity-80">
       
       {/* 페이지 제목 */}
       {/* text-4xl: 글자 크기, font-bold: 글자 굵게, mb-8: 아래 여백, text-center: 가운데 정렬 */}
-      <h3 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-8 text-center leading-tight">
+      {/* <h3 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-8 text-center leading-tight">
         IKKIson Online.
-      </h3>
+      </h3> */}
+
+      {/* 배터 이미지 */}
+      <img
+        src="/img/IKKIson_online_banner_02.png"
+        alt="IKKIson_online_banner_02"
+        // className="w-60 h-60 rounded-full mx-auto mb-8 shadow-lg object-cover"
+        className="h-40 rounded-lg mx-auto mb-8 shadow-lg object-cover"
+      />
 
       {/* 나의 사진/이미지 */}
       <img
@@ -82,6 +91,20 @@ export default function Home() {
           />
         ))}
       </div> {/* 그리드 종료 */}
+      {/* 홈페이지 테마 색상 코드 시작 */}
+      <div style={{ padding: '8px' }}>
+        <hr style={{ margin: '8px 0' }} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <div style={{ backgroundColor: 'var(--color-purple)', color: '#fff', padding: '8px', borderRadius: '4px' }}> #845ec2</div>
+          <div style={{ backgroundColor: 'var(--color-purple-grey)', color: '#fff', padding: '8px', borderRadius: '4px' }}> #998fcc</div>
+          <div style={{ backgroundColor: 'var(--color-pink)', color: '#fff', padding: '8px', borderRadius: '4px' }}> #d65db1</div>
+          <div style={{ backgroundColor: 'var(--color-red)', color: '#fff', padding: '8px', borderRadius: '4px' }}> #ff6f91</div>
+          <div style={{ backgroundColor: 'var(--color-orange)', color: '#fff', padding: '8px', borderRadius: '4px' }}> #ff9671</div>
+          <div style={{ backgroundColor: 'var(--color-yellow)', color: '#fff', padding: '8px', borderRadius: '4px' }}> #ffc75f</div>
+          <div style={{ backgroundColor: 'var(--color-light-yellow)', color: '#fff', padding: '8px', borderRadius: '4px' }}> #f9f871</div>
+        </div> {/* 색상코드 내부 종료 */}
+      </div> {/* 색상코드 종료 */}
+      {/* 홈페이지 테마 색상 코드 종료 */}
     </div> /* 최상위 컨테이너 종료 */
   );
 }
