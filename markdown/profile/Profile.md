@@ -56,25 +56,26 @@
 
 |                 | Proficiency | Dev Case |
 |-----------------|-------------|----------|
-| **Java**        | ⭐⭐⭐⭐☆ | Backend (Spring Boot), AI-Serve (Vert.X), NLP (Native lib) |
-| **Python**      | ⭐⭐⭐⭐☆ | Backend/AI-Serve (FastAPI), Pytorch, NLP Modules           |
-| **C/C++**       | ⭐⭐⭐☆☆  | AI-Serve (JNI), Trie Dictionary, G2P                       |
-| **Bash Script** | ⭐⭐⭐☆☆  | AI Train, App Script                                       |
-| **Kotlin**      | ⭐⭐☆☆☆   | Backend (Spring Boot)                                      |
-| | |
+| ![eclipseadoptium](https://img.shields.io/badge/Java_eclipseadoptium-FF1464?style=for-the-badge&logo=eclipseadoptium&logoColor=white) | ⭐⭐⭐⭐☆ | Backend (Spring Boot), AI-Serve (Vert.X), NLP (Native lib) |
+| ![openjdk](https://img.shields.io/badge/Java_openjdk-000000?style=for-the-badge&logo=openjdk&logoColor=white) | | |
+| ![kotlin](https://img.shields.io/badge/kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)      | ⭐⭐⭐☆☆   | Backend (Spring Boot)                                      |
+| ![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=ffdd54)      | ⭐⭐⭐⭐☆ | Backend/AI-Serve (FastAPI), Pytorch, NLP Modules           |
+| ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)       | ⭐⭐⭐☆☆  | AI-Serve (JNI), Trie Dictionary, G2P                       |
+| ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white) | ⭐⭐⭐☆☆  | AI Train, App Script                                       |
+| | | |
 
 ### ⚒️ Framework & Opensource
 
 |                      | Proficiency | platform |
 |----------------------|-------------|----------|
-| **Vert.X Framework** | ⭐⭐⭐⭐☆ | JDK      |
-| **FastAPI**          | ⭐⭐⭐⭐☆ | Python   |
-| **Spring Boot**      | ⭐⭐☆☆☆   | JDK      |
-| **PyTorch**          | ⭐⭐☆☆☆   | Python   |
+| ![eclipsevertdotx](https://img.shields.io/badge/eclipsevertdotx-782A90?style=for-the-badge&logo=eclipsevertdotx) | ⭐⭐⭐⭐☆ | JDK      |
+| ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)          | ⭐⭐⭐⭐☆ | Python   |
+| ![springboot](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)      | ⭐⭐☆☆☆   | JDK      |
+| ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)          | ⭐⭐☆☆☆   | Python   |
 | **Kaldi**            | ⭐⭐⭐☆☆  | ASR/STT  |
 | **Wenet**            | ⭐⭐⭐☆☆  | ASR/STT  |
 | **OpenNMT**          | ⭐⭐⭐☆☆  | NLP/NMT  |
-| | |
+| | | |
 
 ### 📡 IPC
 
