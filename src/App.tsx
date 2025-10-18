@@ -46,9 +46,14 @@ export default function App() {
             {/* "/profile" 경로에 Profile 컴포넌트 연결 */}
             <Route path="/profile" element={<Profile />} />
             
-            {/* 기타 페이지들: 포트폴리오, 블로그 등 */}
+            {/* 포트폴리오 */}
             <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/blog" element={<Blog />} />
+
+           {/* 💡 [핵심 변경] 블로그 경로 수정 */}
+            {/* 1. /blog: 블로그 인덱스 (Readme.md) */}
+            {/* 2. /blog/*: 블로그 하위 모든 경로 (개별 포스트) */}
+            <Route path="/blog/*" element={<Blog />} />
+            {/* 참고: "/blog" 경로는 "/blog/*"에 의해 포함되므로 별도로 지정할 필요는 없지만, 명확성을 위해 '/blog'를 따로 정의하거나, 모든 라우팅을 '/blog/*'로 처리하는 것이 일반적입니다. 여기서는 '/blog/*' 하나로 통일합니다. */}
           </Routes>
         </main>
 
