@@ -22,13 +22,13 @@ ikkison.github.io/
 │
 ├─ src/
 │  ├─ components/      # 재사용 UI 컴포넌트
+│  │   ├─ Card.tsx
 │  │   ├─ Header.tsx
-│  │   ├─ Footer.tsx
-│  │   └─ TodoItem.tsx
+│  │   └─ Footer.tsx
 │  │
 │  ├─ pages/           # 각 기능별 페이지
+│  │   ├─ Home.tsx          # 나의 Github-pages 의 main/Home 페이지
 │  │   ├─ Profile.tsx       # 자기소개
-│  │   ├─ TodoApp.tsx       # TODO 앱
 │  │   ├─ Portfolio.tsx     # 포트폴리오
 │  │   └─ Blog.tsx          # 블로그
 │  │
