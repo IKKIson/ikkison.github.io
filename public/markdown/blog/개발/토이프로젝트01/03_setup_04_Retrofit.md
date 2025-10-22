@@ -2,12 +2,13 @@
 
 - [01 PostgreSQL](./03_setup_01_PostgreSQL.md)
 - [02 SpringBoot](./03_setup_02_SpringBoot.md)
-- [03 SpringSecurity](./03_setup_03_SpringSecurity.md)
-- [04 H2](./03_setup_04_H2.md)
-- **05 Retrofit**
-- [06 queryDSL](./03_setup_06_queryDSL.md)
-- [07 Swagger](./03_setup_07_Swagger.md)
+- [03 Logger](./03_setup_03_Logger.md)
+- [04 Retrofit](./03_setup_04_Retrofit.md)
+- [05 Swagger](./03_setup_05_Swagger.md)
+- [06 SpringSecurity](./03_setup_06_SpringSecurity.md)
+- [07 H2](./03_setup_07_H2.md)
 - [08 JWT](./03_setup_08_JWT.md)
+- [09 queryDSL](./03_setup_09_queryDSL.md)
 
 ## Server also Client?
 
@@ -74,13 +75,13 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 
 - 널리 사용되는 버전은 Retrofit(2.9.0) 입니다.
 
-    ![mvnrepo_retrofit](./03_setup_05_Retrofit/mvnrepo_retrofit.png)
+    ![mvnrepo_retrofit](./03_setup_04_Retrofit/mvnrepo_retrofit.png)
 
   - 그러나, Retrofit(2.9.0)은 2020년에 커밋된 버전이먀, **2.9.0** 의 의존성에서 **보안 취약점**이 발견되어있습니댜.
 
-    ![mvnrepo_retrofit](./03_setup_05_Retrofit/mvnrepo_retrofit_2.9.0_01.png)
+    ![mvnrepo_retrofit](./03_setup_04_Retrofit/mvnrepo_retrofit_2.9.0_01.png)
 
-    ![mvnrepo_retrofit](./03_setup_05_Retrofit/mvnrepo_retrofit_2.9.0_02.png)
+    ![mvnrepo_retrofit](./03_setup_04_Retrofit/mvnrepo_retrofit_2.9.0_02.png)
 
 - 2025년 9월 기준으로 이후 버전에서는 보안 취약점이 보고되지 않은 상태 발견되지 않았습니다.
 
