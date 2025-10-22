@@ -1,4 +1,4 @@
-# 개발환경 02 SpringBoot
+const n=`# 개발환경 02 SpringBoot
 
 - [01 PostgreSQL](./03_setup_01_PostgreSQL.md)
 - [02 SpringBoot](./03_setup_02_SpringBoot.md)
@@ -46,3 +46,4 @@
 ## 마치며
 
 - 이제 Spring Security 설정을 통해 개발, 배포 상황을 고려한 기본 설정을 진행할 것이다.
+`;export{n as default};

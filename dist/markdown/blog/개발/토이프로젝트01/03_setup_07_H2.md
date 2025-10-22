@@ -10,16 +10,4 @@
 - [08 JWT](./03_setup_08_JWT.md)
 - [09 queryDSL](./03_setup_09_queryDSL.md)
 
-## SpringBoot
-
-### 1. Spring Security
-
-### 2. H2
-
-### 2. queryDSL
-
-### 3. Swagger
-
-### 4. Retrofit
-
-## PostgreSQL
+## H2

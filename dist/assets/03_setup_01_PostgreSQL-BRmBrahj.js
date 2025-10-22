@@ -1,4 +1,4 @@
-# 개발환경 Setup 01 PostgreSQL
+const n=`# 개발환경 Setup 01 PostgreSQL
 
 - [01 PostgreSQL](./03_setup_01_PostgreSQL.md)
 - [02 SpringBoot](./03_setup_02_SpringBoot.md)
@@ -57,29 +57,29 @@
 
 1. 이미지 받기
 
-    ```shell
+    \`\`\`shell
     #!/bin/bash
 
     DOCKER_IMAGE_NAME=postgres
     DOCKER_IMAGE_TAG="16"
 
     # 이미지 받기
-    docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+    docker pull \${DOCKER_IMAGE_NAME}:\${DOCKER_IMAGE_TAG}
 
     # 이미지 목록 확인
     docker images
-    ```
+    \`\`\`
 
 2. 도커 실행
 
-    ```shell
+    \`\`\`shell
     #!/bin/bash
 
     DOCKER_IMAGE_NAME=postgres
     DOCKER_IMAGE_TAG="16"
 
-    DOCKER_CONTAINER_NAME=${DOCKER_IMAGE_NAME}_${DOCKER_IMAGE_TAG}
-    DOCKER_CONTAINER_NAME=${DOCKER_CONTAINER_NAME//-/"."} # 버전에 "." 혹은 "-" 이 포함된 문자열이면 제거
+    DOCKER_CONTAINER_NAME=\${DOCKER_IMAGE_NAME}_\${DOCKER_IMAGE_TAG}
+    DOCKER_CONTAINER_NAME=\${DOCKER_CONTAINER_NAME//-/"."} # 버전에 "." 혹은 "-" 이 포함된 문자열이면 제거
 
     LOG_DRIVER=none     # none, json-file, syslog, journald, gelf, fluentd, awslogs, splunk, etwlogs, gcplogs
     LOG_OPT_MAX_SIZE=1m # 각 로그 파일 최대 크기
@@ -94,25 +94,25 @@
     POSTGRES_DATA=/var/lib/postgresql/data # container에 저장되는 postgre 데이터 공유
 
     RUN_OPT=""
-    RUN_OPT=${RUN_OPT}" --rm" # container stop 시 container 자동 삭제
-    RUN_OPT=${RUN_OPT}" -d" # container daemon(-d) / foreground(-it)
-    RUN_OPT=${RUN_OPT}" --cidfile .container_id" # container id 값을 ".container_id" 파일로 저장하여 stop/exec 등 해당 container 작업 시 용이
+    RUN_OPT=\${RUN_OPT}" --rm" # container stop 시 container 자동 삭제
+    RUN_OPT=\${RUN_OPT}" -d" # container daemon(-d) / foreground(-it)
+    RUN_OPT=\${RUN_OPT}" --cidfile .container_id" # container id 값을 ".container_id" 파일로 저장하여 stop/exec 등 해당 container 작업 시 용이
 
     # PostgreSQL 도커 실행
-    docker run $RUN_OPT \
-        --log-driver ${LOG_DRIVER} \
-        --name ${DOCKER_CONTAINER_NAME} \
-        -p ${HOST_PORT}:${CONTAINER_PORT} \
-        -e TZ=${TIMEZONE} \
-        -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
-        -v ${HOST_DATA}:${POSTGRES_DATA} \
-        ${DOCKER_IMAGE_FULL_NAME}
+    docker run $RUN_OPT \\
+        --log-driver \${LOG_DRIVER} \\
+        --name \${DOCKER_CONTAINER_NAME} \\
+        -p \${HOST_PORT}:\${CONTAINER_PORT} \\
+        -e TZ=\${TIMEZONE} \\
+        -e POSTGRES_PASSWORD=\${POSTGRES_PASSWORD} \\
+        -v \${HOST_DATA}:\${POSTGRES_DATA} \\
+        \${DOCKER_IMAGE_FULL_NAME}
 
     # !!! 주의 !!!
     # --log-driver 가 none 인경우 --log-opt 를 사용하면 안됩니다.
     # none 아닌 경우에만 추가합니다.
-    # --log-opt max-size=${LOG_OPT_MAX_SIZE} \
-    # --log-opt max-file=${LOG_OPT_MAX_FILE} \
+    # --log-opt max-size=\${LOG_OPT_MAX_SIZE} \\
+    # --log-opt max-file=\${LOG_OPT_MAX_FILE} \\
 
     # 실행 중인 container 확인
     docker ps
@@ -123,7 +123,7 @@
     # PostgreSQL도커 container id 가 저장되었는지 확인
     cat ./container_id
 
-    ```
+    \`\`\`
 
     - **--log-driver** 가 **none** 인 이유
         - 저는 container 안에서 실행되는 실제 서버/프로세스의 로그를 **-v** 옵션으로 Host 와 공유하여 관리하는 것을 선호합니다.
@@ -136,95 +136,95 @@
 
 3. 도커 중지
 
-    ```shell
+    \`\`\`shell
     #!/bin/bash
 
     DOCKER_IMAGE_NAME=postgres
     DOCKER_IMAGE_TAG="16"
 
-    DOCKER_CONTAINER_NAME=${DOCKER_IMAGE_NAME}_${DOCKER_IMAGE_TAG}
-    DOCKER_CONTAINER_NAME=${DOCKER_CONTAINER_NAME//-/"."}
+    DOCKER_CONTAINER_NAME=\${DOCKER_IMAGE_NAME}_\${DOCKER_IMAGE_TAG}
+    DOCKER_CONTAINER_NAME=\${DOCKER_CONTAINER_NAME//-/"."}
 
     # is exists .container_id file
     if [ ! -f "./.container_id" ]; then
         echo ".container_id 파일을 찾을 수 없습니다. 컨테이너가 실행 중인지 확인하세요?"
-        docker ps --filter "name=${DOCKER_CONTAINER_NAME}" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" 
+        docker ps --filter "name=\${DOCKER_CONTAINER_NAME}" --format "table {{.ID}}\\t{{.Names}}\\t{{.Status}}" 
         exit 1
     fi
 
     # is empty .container_id file
     CONTAINER_ID=$(cat "./.container_id")
-    if [ -z "${CONTAINER_ID}" ]; then
+    if [ -z "\${CONTAINER_ID}" ]; then
         echo ".container_id 파일에 값이 없습니다. 컨테이너가 실행 중인지 확인하세요?"
-        docker ps --filter "name=${DOCKER_CONTAINER_PREFIX_NAME}" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" 
+        docker ps --filter "name=\${DOCKER_CONTAINER_PREFIX_NAME}" --format "table {{.ID}}\\t{{.Names}}\\t{{.Status}}" 
         exit 1
     fi
 
     # Container 중지
-    docker stop ${CONTAINER_ID}
+    docker stop \${CONTAINER_ID}
 
     docker ps
 
     docker ps -a
-    ```
+    \`\`\`
 
 4. 도커 컨테이너 진입(/bin/bash 터미널 접속)
 
-    ```shell
+    \`\`\`shell
     #!/bin/bash
 
     DOCKER_IMAGE_NAME=postgres
     DOCKER_IMAGE_TAG="16"
 
-    DOCKER_CONTAINER_NAME=${DOCKER_IMAGE_NAME}_${DOCKER_IMAGE_TAG}
-    DOCKER_CONTAINER_NAME=${DOCKER_CONTAINER_NAME//-/"."}
+    DOCKER_CONTAINER_NAME=\${DOCKER_IMAGE_NAME}_\${DOCKER_IMAGE_TAG}
+    DOCKER_CONTAINER_NAME=\${DOCKER_CONTAINER_NAME//-/"."}
 
     # is exists .container_id file
     if [ ! -f "./.container_id" ]; then
         echo ".container_id 파일을 찾을 수 없습니다. 컨테이너가 실행 중인지 확인하세요?"
-        docker ps --filter "name=${DOCKER_CONTAINER_NAME}" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" 
+        docker ps --filter "name=\${DOCKER_CONTAINER_NAME}" --format "table {{.ID}}\\t{{.Names}}\\t{{.Status}}" 
         exit 1
     fi
 
     # is empty .container_id file
     CONTAINER_ID=$(cat "./.container_id")
-    if [ -z "${CONTAINER_ID}" ]; then
+    if [ -z "\${CONTAINER_ID}" ]; then
         echo ".container_id 파일에 값이 없습니다. 컨테이너가 실행 중인지 확인하세요?"
-        docker ps --filter "name=${DOCKER_CONTAINER_PREFIX_NAME}" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" 
+        docker ps --filter "name=\${DOCKER_CONTAINER_PREFIX_NAME}" --format "table {{.ID}}\\t{{.Names}}\\t{{.Status}}" 
         exit 1
     fi
 
-    docker exec -it ${CONTAINER_ID} /bin/bash
-    ```
+    docker exec -it \${CONTAINER_ID} /bin/bash
+    \`\`\`
 
 5. 도커 컨테이너 로그
 
-    ```shell
+    \`\`\`shell
     #!/bin/bash
 
     DOCKER_IMAGE_NAME=postgres
     DOCKER_IMAGE_TAG="16"
 
-    DOCKER_CONTAINER_NAME=${DOCKER_IMAGE_NAME}_${DOCKER_IMAGE_TAG}
-    DOCKER_CONTAINER_NAME=${DOCKER_CONTAINER_NAME//-/"."}
+    DOCKER_CONTAINER_NAME=\${DOCKER_IMAGE_NAME}_\${DOCKER_IMAGE_TAG}
+    DOCKER_CONTAINER_NAME=\${DOCKER_CONTAINER_NAME//-/"."}
 
     # is exists .container_id file
     if [ ! -f "./.container_id" ]; then
         echo ".container_id 파일을 찾을 수 없습니다. 컨테이너가 실행 중인지 확인하세요?"
-        docker ps --filter "name=${DOCKER_CONTAINER_NAME}" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" 
+        docker ps --filter "name=\${DOCKER_CONTAINER_NAME}" --format "table {{.ID}}\\t{{.Names}}\\t{{.Status}}" 
         exit 1
     fi
 
     # is empty .container_id file
     CONTAINER_ID=$(cat "./.container_id")
-    if [ -z "${CONTAINER_ID}" ]; then
+    if [ -z "\${CONTAINER_ID}" ]; then
         echo ".container_id 파일에 값이 없습니다. 컨테이너가 실행 중인지 확인하세요?"
-        docker ps --filter "name=${DOCKER_CONTAINER_PREFIX_NAME}" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" 
+        docker ps --filter "name=\${DOCKER_CONTAINER_PREFIX_NAME}" --format "table {{.ID}}\\t{{.Names}}\\t{{.Status}}" 
         exit 1
     fi
 
-    docker logs -f ${CONTAINER_ID}
-    ```
+    docker logs -f \${CONTAINER_ID}
+    \`\`\`
 
     - **docker run** 시 **--log-driver none** 인 경우 로그가 없으므로 **docker logs** 명령어를 사용할 수 없습니다.
 
@@ -235,3 +235,4 @@
 - 추후 배포/운영 환경까지 고려하여 간단한게 Docker 이미지를 활용하는 것을 선호합니다.
 - 특히, H2 보다는 실제 DBMS와 연동하여 개발하는 것을 좋아합니다.
 - PostgreSQL 도커 이미지 네이밍과 명령어를 고려할 때, **"postgres"** 라고 네이밍 하는것이 용이해 보입니다.
+`;export{n as default};
