@@ -31,11 +31,27 @@ export default function RenderMarkdownPage({ content, baseImagePath }: MarkdownR
           components={{
             img: ({ node, ...props }) => {
               const src = props.src;
-              // 외부 링크 (http/https) 또는 절대 경로 (/)는 그대로 사용
-              if (src && (src.startsWith('http') || src.startsWith('/'))) {
+              // // 외부 링크 (http/https) 또는 절대 경로 (/)는 그대로 사용
+              // if (src && (src.startsWith('http') || src.startsWith('/'))) {
+              //   return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+              // }
+              // // 상대 경로 처리
+              // const finalSrc = `${baseImagePath}/${src.replace(/^\.?\//, '')}`;
+              // return <img {...props} src={finalSrc} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
+              
+              // 1. src가 없으면 (undefined나 null이면) null이나 기본값을 반환하여 런타임 오류 방지
+              if (!src) {
+                // 이미지가 없거나 src 속성이 누락된 경우입니다.
+                return null; 
+              }
+
+              // 2. 외부 링크 (http/https) 또는 절대 경로 (/)는 그대로 사용
+              if (src.startsWith('http') || src.startsWith('/')) {
                 return <img {...props} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
               }
-              // 상대 경로 처리
+              
+              // 3. 상대 경로 처리 (src가 문자열임이 1번 if문에서 보장됨)
+              // 이제 TypeScript는 src가 확실히 문자열임을 알기 때문에 오류가 해결됩니다.
               const finalSrc = `${baseImagePath}/${src.replace(/^\.?\//, '')}`;
               return <img {...props} src={finalSrc} className="max-w-full h-auto rounded-md" alt={props.alt || ''} />;
             },

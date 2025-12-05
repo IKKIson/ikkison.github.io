@@ -1,4 +1,4 @@
-# 개발환경
+const n=`# 개발환경
 
 - [01 PostgreSQL](./03_setup_01_PostgreSQL.md)
 - [02 SpringBoot](./03_setup_02_SpringBoot.md)
@@ -17,7 +17,7 @@
 
 ## Setup
 
-```kts
+\`\`\`kts
 // build.gradle.kts
 
 plugins {
@@ -87,7 +87,7 @@ tasks.named("clean") {
 
 // ... 생략 ...
 
-```
+\`\`\`
 
 ---
 
@@ -96,3 +96,4 @@ tasks.named("clean") {
 - 나는 JVM 기반 언어의 라이브러리를 추가할때, 공식홈페이지, 공식Github, Maven Repository를 찾아보는 것을 좋아한다.
 - QueryDSL 을 Maven Repository를 검색해보니 취약점이 단한번도 없었던 적이 없다....
 - 16년 이후에는 패치 주기가 길어진것도 그렇고 취약점도 그렇고 Spring이라는 거대한 생태계에서 이렇게 편한 라이브러리가 이러한 상황에 놓인 것이 아쉽다.
+`;export{n as default};

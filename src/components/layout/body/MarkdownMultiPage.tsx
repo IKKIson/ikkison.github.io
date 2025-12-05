@@ -1,9 +1,10 @@
-import { useEffect, useState, useRef, ImgHTMLAttributes } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { useEffect, useState, useRef } from 'react';
+// import { useEffect, useState, useRef, type ImgHTMLAttributes } from 'react';
+// import ReactMarkdown from 'react-markdown';
+// import remarkGfm from 'remark-gfm';
 import { FaChevronRight, FaChevronDown, FaChevronLeft } from 'react-icons/fa';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import '../../../styles.css';
 
 import RenderMarkdownPage from '../../widget/MarkdownPage';
@@ -22,12 +23,12 @@ type TreeNode = {
   isOpen?: boolean;
 };
 
-type CustomCodeProps = {
-  node?: React.ReactNode;
-  inline?: boolean;
-  className?: string;
-  children?: React.ReactNode;
-};
+// type CustomCodeProps = {
+//   node?: React.ReactNode;
+//   inline?: boolean;
+//   className?: string;
+//   children?: React.ReactNode;
+// };
 
 type MarkdownMultiPageProps = {
   basePath: string; // e.g., '/markdown/blog'
@@ -41,7 +42,7 @@ export default function MarkdownMultiPage({
   basePath,
   pageTitle,
   searchPlaceholder,
-  loadingMessage,
+  // loadingMessage,
   sortByDate = false,
 }: MarkdownMultiPageProps) {
   const [tree, setTree] = useState<TreeNode[]>([]);
