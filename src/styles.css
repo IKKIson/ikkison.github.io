@@ -1,0 +1,224 @@
+
+/* 테마 색상 변수 지정 */
+:root {
+  --color-purple: #845ec2;
+  --color-purple-grey: #998fcc;
+  --color-pink: #d65db1;
+  --color-red: #ff6f91;
+  --color-orange: #ff9671;
+  --color-yellow: #ffc75f;
+  --color-light-yellow: #f9f871;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-card-hover: #f0f0f0;
+  --color-sidebar-bg: #ffffff;
+  --color-sidebar-hover: #f3f3f3;
+  --color-sidebar-selected-gradient: linear-gradient(to right, var(--color-purple), var(--color-pink), var(--color-red));
+}
+
+/*********************************/
+/****    components/Header    ****/
+/*********************************/
+.header {
+  @apply p-4 shadow-lg;
+  background-color: var(--color-purple);
+  color: var(--color-white);
+}
+
+/* 데스크톱 메뉴 링크 */
+.header-nav-link {
+  @apply transition duration-300;
+}
+.header-nav-link:hover {
+  color: var(--color-purple);
+}
+
+/* 모바일 메뉴 버튼 */
+.header-mobile-btn {
+  @apply text-2xl md:hidden;
+}
+
+/* 모바일 메뉴 */
+.header-mobile-menu {
+  @apply md:hidden mt-4 transition-all duration-300 ease-in-out;
+}
+.header-mobile-menu.open {
+  @apply max-h-96 opacity-100;
+}
+.header-mobile-menu.closed {
+  @apply max-h-0 opacity-0 overflow-hidden;
+}
+
+/* 모바일 메뉴 링크 */
+.header-mobile-link {
+  @apply block p-2 rounded;
+}
+.header-mobile-link:hover {
+  background-color: var(--co--color-purple);
+}
+
+/*********************************/
+/****    components/Footer    ****/
+/*********************************/
+/* Footer 전체 스타일 */
+.footer {
+  @apply p-6 mt-auto;
+  background-color: var(--color-purple);
+  color: var(--color-white);
+}
+
+/* Footer 내부 Flex 컨테이너 */
+.footer-container {
+  @apply container mx-auto max-w-7xl;
+}
+
+/* Footer 상단 그룹 (연락처 + Copyright) */
+.footer-flex {
+  @apply flex flex-col md:flex-row md:justify-between items-center space-y-4 md:space-y-0 text-sm;
+}
+
+/* 연락처/링크 그룹 */
+.footer-links {
+  @apply flex flex-col items-center md:flex-row space-y-2 md:space-y-0 md:space-x-8;
+}
+
+/* Footer 링크 */
+.footer-link {
+  @apply flex items-center space-x-2 transition duration-300;
+  color: var(--color-white);
+}
+.footer-link:hover {
+  color: var(--color-purple);
+}
+
+/* Footer 아이콘 크기 */
+.footer-icon {
+  @apply text-xl;
+}
+
+/* Copyright 영역 */
+.footer-copyright {
+  @apply text-center md:text-right text-gray-400;
+}
+
+/*******************************/
+/****         Card          ****/
+/****    pages/Home/Card    ****/
+/*******************************/
+/* [카드] 공통 스타일 */
+.card {
+  @apply text-white p-6 rounded-lg shadow-lg transform transition duration-300 w-full max-w-xs;
+}
+.card:hover {
+  @apply scale-105;
+}
+/* [카드] 배경색별 클래스 */
+.card-purple {
+  background-color: var(--color-purple);
+}
+
+.card-pink {
+  background-color: var(--color-pink);
+}
+
+.card-red {
+  background-color: var(--color-red);
+}
+
+.card-orange {
+  background-color: var(--color-orange);
+}
+
+.card-yellow {
+  background-color: var(--color-yellow);
+}
+
+.card-light-yellow {
+  background-color: var(--color-light-yellow);
+}
+
+/* 카드 태그 스타일 */
+.card-tag {
+  @apply text-xs px-2 py-1 rounded bg-white text-black;
+}
+
+/*******************************/
+/****         Card          ****/
+/****    pages/Portfolio    ****/
+/*******************************/
+/* Portfolio 트리/사이드바 */
+.sidebar {
+  background-color: var(--color-sidebar-bg);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 50;
+  width: 16rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  font-weight: 500;
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.375rem; /* Tailwind rounded-lg */
+  transition: all 0.2s ease;
+}
+
+.sidebar button:hover {
+  background-color: var(--color-sidebar-hover);
+}
+
+/* Markdown 스타일 */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+}
+
+.prose code {
+  background-color: #f0f0f0;
+  color: #1a202c;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  word-break: break-word;
+}
+
+/* 스크롤바 */
+/* Webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-purple);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-purple) #f0f0f0;
+}
+
+/*******************************/
+/****       Home Page       ****/
+/*******************************/
+.home-center-bg {
+  background-color: var(--color-purple-grey);
+}
