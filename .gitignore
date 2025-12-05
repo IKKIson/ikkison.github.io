@@ -1,0 +1,31 @@
+# Node.js dependencies
+/node_modules/
+
+# TypeScript build output
+# /dist/
+/build/
+
+# Vite.js cache
+/.vite/
+
+# Log files
+*.log
+
+# Dependency directory
+yarn.lock
+package-lock.json
+
+# MacOS specific files
+.DS_Store
+
+# IDE/Editor folders and files
+.vscode/
+.idea/
+
+# dotenv environment variable files
+.env
+.env.local
+.env.*.local
+
+# Test coverage
+coverage/

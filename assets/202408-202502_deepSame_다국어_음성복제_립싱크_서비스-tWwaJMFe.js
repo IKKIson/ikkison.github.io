@@ -1,0 +1,78 @@
+const n=`# deepSame 다국어 음성복제 립싱크 서비스
+
+- **소속 :** 엘솔루 / 연구개발본부 / 음성AI 개발팀 / 주임연구원
+- **기간 :** 2024.08 ~ 2025.02
+
+## 프로젝트 설명
+
+- 동영상 화자의 다국어 발화 및 립싱크 AI 서비스
+- 다국어 자동 자막 생성
+- 다국어 TTS 변환
+- 다국어 TTS 에 맞춘 화자 립싱크 변환
+
+---
+
+## 담당 개발
+
+1. 다국어 음성인식을 위한 Whipser 서빙 개발
+2. 자사 솔루션 및 AI서버를 위한 Gateway 서버 개발
+3. Mintlify API 서버 도입
+4. 립싱크를 고려한 Syllable 기반 LLM번역 방식 적용
+5. AWS EC2 구축
+
+### 1. 다국어 음성인식을 위한 Whipser 서빙 개발
+
+**기술 스택:** Python3, FastAPI, Whisper(WhisperX, Faster-Whisper)
+
+#### Problem 01. Speech Language Detection Performance
+
+- 상황
+  - 동영상에서 추출된 오디오의 발화 언어를 인지하여 한국어는 자사 STT 엔진(AITranscribe) , 그외 언어는 Whisper로 STT 추론. 이후 자사 NMT 엔진으로 다국어 대응.
+  - STT엔진 분기를 위해 언어 감지 필요.
+  - 자연스러운 Language Detection을 위해서는 최소한 EPD 문장 단위로 인지 필요.
+- 문제
+  - 자사 솔루션을 활용하여 Language Deteciton 전용 Voice Activity Detection 방법론?
+    - 자사 E2E STT의 경우 한국어 음성인식만 가능하며, 외국어 오디오를 강제로 Decoding 할 경우 TimeStamp 정보가 보장되지 않음.
+    - 자사 Hybrid STT의 경우 한국어, 영어 음성인식만 가능하고 TimeStamp의 정확도가 매우 높지만, 외국어 오디오를 강제로 Decoding 할 경우 TimeStamp 정보가 보장되지 않음.
+  - 최초 버전으로써 Whisper에서 transcribe 직전 내부에서 사용되는 detection_language을 별도 구현 필요.
+- 해결 방안
+  - 
+- 해결/결과
+  - faster_whisper 내부 소스를 활용하여 입력 오디오의 Language Deteciton 구현 및 RestAPI 설계
+- 개선 과제
+  - 발화구간 추출
+    - Pyannote, silero-vad 등 별도 VAD 도입 여부 평가
+    - 다국어 TimeStamp를 위한 WhisperX 성능 및 스펙 평가
+  - 발화구간 내 감지 구간 최적화
+- Reference
+
+#### Problem 02. Faster-Whisper TimeStamp
+
+- 상황
+  - [faster-whisper](https://github.com/SYSTRAN/faster-whisper) 최초 서빙 후 TimeStamp 정확도가 떨어짐
+  - faster-whisper 내 silero-vad가 상용화 수준의 성능이 아님.
+  - silero-vad 미사용 시 Rule Based로 Align이 생성되는데, 동일 오디오를 여러번 추론시 간투사가 인식이 일관적이지 않은(인식되다 안되다) 상황에서, Align이 이를 고려하지 않음.
+- 문제
+  - 한국어 오디오에서 silero-vad의 평가가 필요하며, 실데이터 디코딩 및 비교하는데 비용(작업시간 + AWS EC2)이 발생함.
+- 해결방안
+   1. AcousticModel/lacttice/laxicon 기반 Alignment의 경우 성능이 높고 상용화검증이 되었지만, 언어별 개발이 필요함.
+   2. 
+- 해결/결과
+  -
+
+### 2. 자사 솔루션 및 AI서버를 위한 Gateway 서버 개발
+
+**기술 스택:**
+
+### 3. Mintlify API 서버 도입
+
+**기술 스택:**
+
+### 4. 립싱크를 고려한 Syllable 기반 LLM번역 방식 적용
+
+**기술 스택:**
+
+### 5. AWS EC2 구축
+
+**기술 스택:**
+`;export{n as default};
